@@ -1,0 +1,63 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "alcsm"
+version = "0.1.0"
+description = "AI Leadership Credential Gap Analysis (ALCSM) - thesis implementation"
+requires-python = ">=3.11"
+readme = "README.md"
+
+dependencies = [
+    "SQLAlchemy>=2.0",
+    "psycopg2-binary>=2.9",
+    "python-dotenv>=1.0",
+    "pandas>=2.0",
+    "numpy>=2.0",
+]
+
+[project.optional-dependencies]
+# NLP pipeline (Phase P7). Local-only models, see
+# CLAUDE_CODE_IMPLEMENTATION_GUIDE.md §10 - never an external API.
+nlp = [
+    "spacy>=3.7",
+    "sentence-transformers>=3.0",
+]
+# Reliability computation (Phase P5).
+reliability = [
+    "scipy>=1.11",
+]
+# Streamlit screening tool (Phase P9).
+app = [
+    "streamlit>=1.30",
+]
+dev = [
+    "black>=24.0",
+    "ruff>=0.4",
+    "mypy>=1.9",
+    "pytest>=8.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/alcsm"]
+
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

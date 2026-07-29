@@ -1,0 +1,254 @@
+%% ALCSM Research Database — Entity Relationship Diagram
+%% Schema version: v1.0.1 (implementation freeze)
+%% Regenerated from the deployed PostgreSQL catalogue and verified
+%% relationship-for-relationship: 22 entities, 33 foreign-key relationships.
+%% Structurally identical to v1.0.0: corrections F-01..F-05 changed CHECK
+%% constraints and one view definition, neither of which alters ER structure.
+
+erDiagram
+    SAMPLING_BATCH ||--o{ PROFILE : "yields"
+    SAMPLING_BATCH ||--o{ JOB_POSTING : "yields"
+
+    PROFILE ||--o{ PROFILE_RAW_SECTION : "decomposes into"
+    PROFILE ||--o{ ALCSM_DIMENSION_SCORE : "is coded by"
+    PROFILE ||--|| PROFILE_DERIVED : "summarised by"
+    PROFILE ||--o| RQ4_IMPACT_INDICATOR : "has criterion values"
+    PROFILE ||--o{ NLP_PREDICTION : "is predicted for"
+    PROFILE ||--o{ ADJUDICATION_RECORD : "may require"
+
+    JOB_POSTING ||--o{ JOB_REQUIREMENT_SCORE : "is coded by"
+    JOB_POSTING ||--o{ ADJUDICATION_RECORD : "may require"
+
+    DIMENSION_REF ||--o{ ALCSM_DIMENSION_SCORE : "classifies"
+    DIMENSION_REF ||--o{ JOB_REQUIREMENT_SCORE : "classifies"
+    DIMENSION_REF ||--o{ NLP_PREDICTION : "classifies"
+    DIMENSION_REF ||--o{ ADJUDICATION_RECORD : "classifies"
+    DIMENSION_REF ||--o{ RELIABILITY_RESULT : "classifies"
+    DIMENSION_REF ||--o{ NLP_MODEL_RUN : "targets"
+    DIMENSION_REF ||--o{ SURVEY_RESPONSE_ITEM : "may concern"
+    DIMENSION_REF ||--o{ ANNOTATION_REVISION_LOG : "may concern"
+
+    MISSING_STATUS_REF ||--o{ ALCSM_DIMENSION_SCORE : "encodes"
+    MISSING_STATUS_REF ||--o{ JOB_REQUIREMENT_SCORE : "encodes"
+    MISSING_STATUS_REF ||--o{ NLP_PREDICTION : "encodes"
+
+    RATER_REF ||--o{ ALCSM_DIMENSION_SCORE : "assigns"
+    RATER_REF ||--o{ JOB_REQUIREMENT_SCORE : "assigns"
+    RATER_REF ||--o{ ADJUDICATION_RECORD : "adjudicates"
+    RATER_REF ||--o{ RQ4_IMPACT_INDICATOR : "extracts"
+
+    PRECEDENT_REF ||--o{ ALCSM_DIMENSION_SCORE : "governs"
+    PRECEDENT_REF ||--o{ JOB_REQUIREMENT_SCORE : "governs"
+
+    TAXONOMY_VERSION ||--o{ TAXONOMY_TERM : "contains"
+    TAXONOMY_VERSION ||--o{ ALCSM_DIMENSION_SCORE : "versions"
+    TAXONOMY_VERSION ||--o{ JOB_REQUIREMENT_SCORE : "versions"
+
+    NLP_MODEL_RUN ||--o{ NLP_PREDICTION : "produces"
+
+    SURVEY_INSTRUMENT ||--o{ SURVEY_RESPONDENT : "administered to"
+    SURVEY_RESPONDENT ||--o{ SURVEY_RESPONSE_ITEM : "answers"
+
+    SAMPLING_BATCH {
+        text sampling_batch_id PK
+        text corpus
+        text search_query
+        text platform
+        int result_set_size
+        int records_included
+        text inclusion_protocol_version
+    }
+
+    PROFILE {
+        text profile_id PK
+        text sampling_batch_id FK
+        text search_query
+        int search_rank_position
+        text inclusion_reason
+        timestamptz collection_ts
+        text profile_language
+        text profile_geography
+        bool activity_data_collected
+    }
+
+    PROFILE_RAW_SECTION {
+        bigserial raw_section_id PK
+        text profile_id FK
+        text section_name
+        text section_text
+        bool section_available
+    }
+
+    ALCSM_DIMENSION_SCORE {
+        bigserial score_record_id PK
+        text profile_id FK
+        smallint dimension_number FK
+        text rater_id FK
+        smallint score
+        text evidence_text
+        text missing_status FK
+        bool ambiguity_flag
+        bool contradiction_flag
+        bool verification_used
+        text precedent_applied FK
+        text taxonomy_version_id FK
+        text rulebook_version
+        bool is_adjudication
+    }
+
+    PROFILE_DERIVED {
+        text profile_id PK
+        numeric completeness_index
+        bool title_substance_contradiction_flag
+        bool adjudicated
+        bool double_coded
+    }
+
+    RQ4_IMPACT_INDICATOR {
+        text profile_id PK
+        int rq4_network_reach
+        numeric rq4_content_engagement
+        int rq4_content_post_count
+        int rq4_recognition_count
+        numeric rq4_seniority_progression_rate
+        text extraction_method
+    }
+
+    JOB_POSTING {
+        text posting_id PK
+        text sampling_batch_id FK
+        text posting_source
+        text raw_posting_text
+        text raw_requirements_text
+        date posted_date
+    }
+
+    JOB_REQUIREMENT_SCORE {
+        bigserial requirement_record_id PK
+        text posting_id FK
+        smallint dimension_number FK
+        text rater_id FK
+        smallint required_score
+        text requirement_modality
+        text missing_status FK
+        bool is_adjudication
+    }
+
+    DIMENSION_REF {
+        smallint dimension_number PK
+        text dimension_code UK
+        text dimension_label
+        text verifiability_tier
+        bool external_verification_permitted
+    }
+
+    MISSING_STATUS_REF {
+        text missing_status PK
+        text description
+        bool counts_as_informative
+        bool include_in_gap
+    }
+
+    RATER_REF {
+        text rater_id PK
+        text rater_role
+        bool blind_to_hypotheses
+    }
+
+    PRECEDENT_REF {
+        text precedent_id PK
+        text situation
+        text binding_ruling
+    }
+
+    TAXONOMY_VERSION {
+        text taxonomy_version_id PK
+        text taxonomy_name
+        text version_label
+        text anchored_to_batch
+        bool frozen
+    }
+
+    TAXONOMY_TERM {
+        bigserial term_id PK
+        text taxonomy_version_id FK
+        text term
+        text tier_or_band
+        int source_frequency
+    }
+
+    NLP_MODEL_RUN {
+        text pipeline_run_id PK
+        text model_name
+        text model_version
+        smallint dimension_number FK
+        int random_seed
+        text information_base
+    }
+
+    NLP_PREDICTION {
+        bigserial prediction_id PK
+        text profile_id FK
+        smallint dimension_number FK
+        text pipeline_run_id FK
+        smallint predicted_score
+        numeric prediction_confidence
+    }
+
+    ADJUDICATION_RECORD {
+        bigserial adjudication_id PK
+        text profile_id FK
+        text posting_id FK
+        smallint dimension_number FK
+        smallint score_rater_a
+        smallint score_rater_b
+        smallint disagreement_magnitude
+        text resolution_route
+        smallint final_score
+        text adjudicator_id FK
+    }
+
+    RELIABILITY_RESULT {
+        bigserial reliability_id PK
+        text analysis_stage
+        text corpus
+        smallint dimension_number FK
+        int n_units
+        numeric krippendorff_alpha
+        numeric alpha_ci_lower
+        numeric alpha_ci_upper
+        numeric score_variance
+    }
+
+    ANNOTATION_REVISION_LOG {
+        bigserial revision_id PK
+        smallint dimension_number FK
+        text rulebook_version_before
+        text rulebook_version_after
+        text trigger_finding
+        bool re_pilot_required
+    }
+
+    SURVEY_INSTRUMENT {
+        text survey_version PK
+        text instrument_title
+        text purpose
+        text ethics_approval_ref
+    }
+
+    SURVEY_RESPONDENT {
+        text respondent_id PK
+        text survey_version FK
+        bool consent_confirmed
+        timestamptz consent_ts
+        bool withdrawal_flag
+        text expertise_years_band
+    }
+
+    SURVEY_RESPONSE_ITEM {
+        bigserial response_item_id PK
+        text respondent_id FK
+        text item_code
+        smallint dimension_number FK
+        numeric response_numeric
+    }

@@ -1,0 +1,39 @@
+# Python virtual environment
+.venv/
+
+# Environment variables
+.env
+
+# Python cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/settings.json
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Coverage
+.coverage
+htmlcov/
+
+# SQLite
+*.db
+
+# Generated exports/backups
+exports/
+backups/
+
+# Data folders (if they will contain datasets)
+16_Data/
+05_Data_Collection/Raw_Data/
+05_Data_Collection/Logs/
