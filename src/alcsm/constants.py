@@ -73,3 +73,41 @@ MISSING_STATUSES: tuple[MissingStatus, ...] = (
 # Full ruling text lives only in the `precedent_ref` database table,
 # loaded from docs/rulebook — never duplicated here.
 PRECEDENT_IDS: tuple[str, ...] = tuple(f"P-{i:02d}" for i in range(1, 16))
+
+# The seven raw profile sections (PROJECT_CONTEXT.md §15), matching the
+# `profile_raw_section.section_name` CHECK constraint in
+# schema/alcsm_schema_v1.0.1.sql exactly. Long-format storage, one row
+# per section, each with an explicit availability flag (PROJECT_CONTEXT.md §9).
+ProfileSectionName = Literal[
+    "headline",
+    "about",
+    "experience",
+    "education",
+    "certifications",
+    "contributions",
+    "activity",
+]
+
+PROFILE_SECTIONS: tuple[ProfileSectionName, ...] = (
+    "headline",
+    "about",
+    "experience",
+    "education",
+    "certifications",
+    "contributions",
+    "activity",
+)
+
+# Controlled vocabulary for `profile.inclusion_reason`, matching the
+# schema's CHECK constraint exactly.
+InclusionReason = Literal[
+    "title_match",
+    "title_variant_match",
+    "manual_review_included",
+]
+
+INCLUSION_REASONS: tuple[InclusionReason, ...] = (
+    "title_match",
+    "title_variant_match",
+    "manual_review_included",
+)

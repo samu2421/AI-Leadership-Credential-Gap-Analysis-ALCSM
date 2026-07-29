@@ -53,7 +53,7 @@ Legend: ✅ done · ⏳ pending (external) · ▶️ ready for implementation to
 
 - [x] Schema frozen at v1.0.1; deploys clean on PostgreSQL 16.
 - [x] 22 tables, 5 views, 66 CHECK constraints, 33 FKs — validated (67-test harness passes).
-- [x] Backup/restore round-trip verified (`scripts/backup_alcsm.sh`).
+- [x] Backup/restore round-trip verified (`03_Database_Design/Backup/backup_alcsm.sh`) — re-verified in Phase P1 closure (2026-07-29) against the live v1.0.1 schema on this environment; one portability fix applied (`stat -c%s` is GNU-only and fails on macOS/BSD — replaced with `wc -c`, no behaviour change). See `P1_Completion_Summary.md`.
 - [x] Deferred hardening documented (F-06 after taxonomy anchoring; F-07 optional; F-08 after ethics).
 - [ ] ▶️ Deploy to the project's secure-store PostgreSQL instance (Phase P0).
 - [ ] ▶️ Load reference data (6 dimensions, 4 missing states, 15 precedents **with real text**, raters).
@@ -68,10 +68,10 @@ Legend: ✅ done · ⏳ pending (external) · ▶️ ready for implementation to
 - [x] Validated insertion helper (`collection_helper.py`) — 8/8 tests pass, atomic, privacy-enforcing.
 - [x] Provenance, pseudonymisation-at-capture, empty-vs-not-retrieved handling all implemented and tested.
 - [x] Single authoritative write path confirmed (the helper; no duplicate ORM write path).
-- [ ] ▶️ Port helper into `src/alcsm/collection/helper.py` with tests (Phase P1).
-- [ ] ⏳ Execute only after Section 3 clears.
+- [x] Ported into `src/alcsm/collection/helper.py` with tests (Phase P1, complete 2026-07-29) — 60 tests (46 pure-logic + 14 DB-integration against a throwaway PostgreSQL 16 cluster with the real schema deployed), all passing; behaviour preserved, structure improved (dataclasses, typed exceptions, logging, config-driven connection). See `P1_Completion_Summary.md`.
+- [ ] ⏳ Execute (i.e. collect and insert real profiles) only after Section 3 clears.
 
-**Status: tooling ready; live collection gated on ethics.**
+**Status: Phase P1 tooling complete; live collection execution remains gated on ethics.**
 
 ---
 
@@ -117,16 +117,16 @@ Legend: ✅ done · ⏳ pending (external) · ▶️ ready for implementation to
 | Repository structure | ▶️ Ready to instantiate (P0) |
 | Ethics / GDPR | ⏳ **Pending — blocks real data** |
 | Database | ✅ Ready; deploy in P0 |
-| Collection workflow | ▶️ Ready; gated on ethics |
+| Collection workflow | ✅ Tooling complete (P1); live execution gated on ethics |
 | Annotation workflow | ▶️ Ready; interface in P4 |
 | NLP preparation | ▶️ Architecture fixed; build after P6 |
 | Taxonomy anchoring | ⏳ After job postings (P3) |
 
 ## What Claude Code may start immediately (no real data, no methodology risk)
 
-- **P0:** initialise repo, `.gitignore`, `pyproject.toml`, deploy schema to a local/dev PostgreSQL, run the validation harness, populate `docs/`, `schema/`, `Archive/`, tag frozen states.
-- **P1:** port and test the collection helper (against constructed fixtures only).
-- Scaffold (with tests) the `reliability/`, `taxonomy/`, `nlp/`, `analysis/`, and `app/` modules **using constructed fixtures** — no real data.
+- **P0:** ✅ complete — repo initialised, `.gitignore`/`pyproject.toml` in place, schema deployed to dev PostgreSQL (`alcsm_dev`), 67-test validation harness green.
+- **P1:** ✅ complete — collection helper ported and tested (against constructed fixtures only); backup script re-verified against the v1.0.1 schema. See `P1_Completion_Summary.md`.
+- Scaffold (with tests) the `reliability/`, `taxonomy/`, `nlp/`, `analysis/`, and `app/` modules **using constructed fixtures** — no real data. (Module skeletons exist from P0; full implementation remains phase-gated as below.)
 
 ## What must NOT start yet
 

@@ -29,7 +29,10 @@ pg_dump -h "${HOST}" -p "${PORT}" -Fc "${DB}" -f "${DUMP}"
 # Verify the dump is readable before trusting it (a dump you cannot
 # list is not a backup).
 pg_restore --list "${DUMP}" > /dev/null
-echo "backup OK: ${DUMP} ($(stat -c%s "${DUMP}") bytes)"
+# `wc -c` (not `stat -c%s`/`stat -f%z`) so this runs unchanged on both
+# GNU/Linux and BSD/macOS without a platform-specific flag.
+DUMP_BYTES="$(wc -c < "${DUMP}" | tr -d '[:space:]')"
+echo "backup OK: ${DUMP} (${DUMP_BYTES} bytes)"
 
 # Optional: encrypt at rest if the store is not already encrypted.
 #   gpg --symmetric --cipher-algo AES256 "${DUMP}" && rm "${DUMP}"

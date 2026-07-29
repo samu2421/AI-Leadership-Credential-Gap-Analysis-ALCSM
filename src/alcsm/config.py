@@ -32,11 +32,27 @@ class DatabaseSettings:
     password: str
 
     def to_dsn(self) -> str:
-        """Build a libpq-style DSN for psycopg2 / SQLAlchemy."""
+        """Build a SQLAlchemy-style DSN (used by db/engine.py only)."""
         return (
             f"postgresql+psycopg2://{self.user}:{self.password}"
             f"@{self.host}:{self.port}/{self.name}"
         )
+
+    def as_psycopg2_kwargs(self) -> dict[str, str | int]:
+        """Connection kwargs for a raw ``psycopg2.connect(**kwargs)`` call.
+
+        psycopg2 does not understand the SQLAlchemy ``+psycopg2`` DSN
+        dialect suffix, so the collection helper (the single
+        psycopg2-based write path, PROJECT_CONTEXT.md §23) uses this
+        instead of ``to_dsn()``.
+        """
+        return {
+            "host": self.host,
+            "port": self.port,
+            "dbname": self.name,
+            "user": self.user,
+            "password": self.password,
+        }
 
 
 @dataclass(frozen=True)
