@@ -37,7 +37,16 @@ AI_Leadership_Credential_Gap_Analysis/
 │   ├── 02_Schema/                  DDL scripts, migrations
 │   ├── 03_Validation/              QA/test/validation reports
 │   └── 04_ER_Diagram/              Entity-relationship diagrams
-├── 04_Ethics/                      IRB approvals, consent forms
+├── 04_Ethics/                      IRB approvals, consent forms, DPIA, LIA, GDPR docs (draft — Phase P2)
+│   ├── 01_Ethics_Approval/         Ethics application + LinkedIn collection protocol annex
+│   ├── 02_DPIA/                    DPIA screening note + full Data Protection Impact Assessment
+│   ├── 03_LIA/                     Legitimate Interests Assessment (Art 6(1)(f) basis)
+│   ├── 04_Privacy_Notice/          Public Article 14 privacy notice
+│   ├── 05_Consent_Materials/       Survey participant information sheet + consent form
+│   ├── 06_GDPR_Documentation/      Data Management Plan + GDPR compliance checklist
+│   ├── 07_Institutional_Correspondence/  Dated committee/DPO/supervisor correspondence log
+│   ├── 08_Submission_Package/      Frozen, as-submitted snapshots (one per submission event)
+│   └── 09_Review_Logs/             Governance consistency reviews of the 04_Ethics/ set
 ├── 05_Data_Collection/             Raw data acquisition (untouched originals)
 ├── 06_Annotation/                  Codebooks, annotated datasets
 ├── 07_Reliability/                 Inter-rater reliability analysis
@@ -55,9 +64,11 @@ AI_Leadership_Credential_Gap_Analysis/
     └── Superseded_Task1_Task4/     Superseded Task 1-4 files (see Document_Version_Policy.md)
 ```
 
-Each folder listed above (the 18 top-level folders, `00` through `17`, plus the 4 `03_Database_Design` subfolders) contains its own `README.md` describing that folder's purpose, contents, naming convention, and versioning rules in detail.
+Each folder listed above (the 18 top-level folders, `00` through `17`, plus the 4 `03_Database_Design` subfolders and the 9 `04_Ethics` subfolders) contains its own `README.md` describing that folder's purpose, contents, naming convention, and versioning rules in detail.
 
 **Correction (P0 cleanup session, 2026-07-28):** this section previously numbered the folders `01`-`17` and did not list `11_Implementation_Governance` at all, which no longer matched the actual repository (numbered `00`-`17`, including `11_Implementation_Governance`). Numbering above is corrected to match disk; see `VERSION.md` for the corresponding log entry. This document describes navigation only — no thesis methodology content was touched.
+
+**Update (P2 Session 4 governance cleanup, 2026-07-30):** `04_Ethics/` is expanded above into its 9 subfolders (created during P2 Sessions 1–2: `01_Ethics_Approval` through `09_Review_Logs`), which this diagram previously left as a single unexpanded line even after those subfolders existed. Navigation-only change; the ethics/GDPR documents themselves remain drafts pending supervisor/DPO/committee review — see `04_Ethics/09_Review_Logs/` and `11_Implementation_Governance/Reviews/P2_Governance_QA_Report.md`.
 
 ---
 
