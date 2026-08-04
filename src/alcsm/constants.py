@@ -111,3 +111,35 @@ INCLUSION_REASONS: tuple[InclusionReason, ...] = (
     "title_variant_match",
     "manual_review_included",
 )
+
+# Which corpus a `sampling_batch` row documents, matching the schema's
+# `sampling_batch.corpus` CHECK constraint exactly. Shared by the
+# profile and job-posting write paths (PROJECT_CONTEXT.md §13).
+Corpus = Literal["profile", "job_posting"]
+
+CORPORA: tuple[Corpus, ...] = ("profile", "job_posting")
+
+# The eight frozen taxonomies (structure frozen; term-list content is
+# anchored in Phase P3 — never invented here). Matches
+# `taxonomy_version.taxonomy_name`'s CHECK constraint exactly.
+TaxonomyName = Literal[
+    "degree",
+    "certification",
+    "ai_role",
+    "leadership_level",
+    "technical_contribution",
+    "professional_engagement",
+    "ai_keyword_ontology",
+    "automation_augmentation",
+]
+
+TAXONOMY_NAMES: tuple[TaxonomyName, ...] = (
+    "degree",
+    "certification",
+    "ai_role",
+    "leadership_level",
+    "technical_contribution",
+    "professional_engagement",
+    "ai_keyword_ontology",
+    "automation_augmentation",
+)

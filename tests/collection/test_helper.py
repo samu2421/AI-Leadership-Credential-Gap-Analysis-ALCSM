@@ -334,3 +334,226 @@ class TestValidationFailuresBlockTheDatabase:
         (count,) = cur.fetchone()
         cur.close()
         assert count == 0
+
+
+class TestSamplingBatchCorpusGeneralization:
+    """Phase P3 Session 2: `SamplingBatch`/`create_sampling_batch` were
+    generalised from a hard-coded `corpus='profile'` assumption to
+    accept either corpus. These tests confirm both the new behaviour
+    and that existing profile-side behaviour is unchanged (backward
+    compatibility, Task 4's explicit requirement).
+    """
+
+    def test_sampling_batch_defaults_to_profile_corpus(
+        self, db_connection: psycopg2.extensions.connection
+    ) -> None:
+        """A `SamplingBatch` built with no `corpus=` argument (the
+        pre-Session-2 calling convention, used throughout the rest of
+        this file) must still register as `corpus='profile'`."""
+        from alcsm.collection.helper import SamplingBatch, create_sampling_batch
+
+        batch = SamplingBatch(
+            sampling_batch_id="BATCH-501",
+            search_query='"Director of AI"',
+            platform="linkedin",
+            collection_started_ts=datetime.now(UTC),
+            inclusion_protocol_version="IP-1.0",
+        )
+        cur = db_connection.cursor()
+        create_sampling_batch(cur, batch)
+        db_connection.commit()
+        cur.execute(
+            "SELECT corpus FROM alcsm.sampling_batch WHERE sampling_batch_id=%s",
+            ("BATCH-501",),
+        )
+        (corpus,) = cur.fetchone()
+        cur.close()
+        assert corpus == "profile"
+
+    def test_sampling_batch_accepts_job_posting_corpus(
+        self, db_connection: psycopg2.extensions.connection
+    ) -> None:
+        from alcsm.collection.helper import SamplingBatch, create_sampling_batch
+
+        batch = SamplingBatch(
+            sampling_batch_id="BATCH-502",
+            search_query='"Director of AI" job',
+            platform="job_board",
+            collection_started_ts=datetime.now(UTC),
+            inclusion_protocol_version="IP-1.0",
+            corpus="job_posting",
+        )
+        cur = db_connection.cursor()
+        create_sampling_batch(cur, batch)
+        db_connection.commit()
+        cur.execute(
+            "SELECT corpus FROM alcsm.sampling_batch WHERE sampling_batch_id=%s",
+            ("BATCH-502",),
+        )
+        (corpus,) = cur.fetchone()
+        cur.close()
+        assert corpus == "job_posting"
+
+    def test_profile_batch_fixture_still_registers_as_profile_corpus(
+        self,
+        db_connection: psycopg2.extensions.connection,
+        sampling_batch_id: str,
+    ) -> None:
+        """Regression guard: the existing `sampling_batch_id` fixture
+        (BATCH-001, used throughout this file's profile tests) must
+        still be a `corpus='profile'` row after the generalisation."""
+        cur = db_connection.cursor()
+        cur.execute(
+            "SELECT corpus FROM alcsm.sampling_batch WHERE sampling_batch_id=%s",
+            (sampling_batch_id,),
+        )
+        (corpus,) = cur.fetchone()
+        cur.close()
+        assert corpus == "profile"
+
+
+class TestCompleteSamplingBatch:
+    """Phase P3 Session 3: `complete_sampling_batch` is the lifecycle
+    counterpart to `create_sampling_batch` — these tests exercise it
+    directly, alongside its sibling function's existing coverage
+    above."""
+
+    def test_completes_a_started_batch(
+        self, db_connection: psycopg2.extensions.connection
+    ) -> None:
+        from alcsm.collection.helper import (
+            SamplingBatch,
+            complete_sampling_batch,
+            create_sampling_batch,
+        )
+
+        cur = db_connection.cursor()
+        create_sampling_batch(
+            cur,
+            SamplingBatch(
+                sampling_batch_id="BATCH-503",
+                search_query='"AI Lead"',
+                platform="linkedin",
+                collection_started_ts=datetime.now(UTC),
+                inclusion_protocol_version="IP-1.0",
+            ),
+        )
+        db_connection.commit()
+
+        completed = complete_sampling_batch(
+            cur,
+            "BATCH-503",
+            collection_ended_ts=datetime.now(UTC),
+            result_set_size=10,
+            records_included=8,
+            notes="test completion",
+        )
+        db_connection.commit()
+        cur.close()
+        assert completed is True
+
+    def test_completed_batch_persists_its_counts(
+        self, db_connection: psycopg2.extensions.connection
+    ) -> None:
+        from alcsm.collection.helper import (
+            SamplingBatch,
+            complete_sampling_batch,
+            create_sampling_batch,
+        )
+
+        cur = db_connection.cursor()
+        create_sampling_batch(
+            cur,
+            SamplingBatch(
+                sampling_batch_id="BATCH-504",
+                search_query='"Director of AI"',
+                platform="linkedin",
+                collection_started_ts=datetime.now(UTC),
+                inclusion_protocol_version="IP-1.0",
+            ),
+        )
+        db_connection.commit()
+
+        complete_sampling_batch(
+            cur,
+            "BATCH-504",
+            collection_ended_ts=datetime.now(UTC),
+            result_set_size=20,
+            records_included=15,
+        )
+        db_connection.commit()
+        cur.execute(
+            """SELECT result_set_size, records_included, collection_ended_ts
+               FROM alcsm.sampling_batch WHERE sampling_batch_id=%s""",
+            ("BATCH-504",),
+        )
+        result_set_size, records_included, ended_ts = cur.fetchone()
+        cur.close()
+        assert result_set_size == 20
+        assert records_included == 15
+        assert ended_ts is not None
+
+    def test_completing_an_already_completed_batch_is_a_no_op(
+        self, db_connection: psycopg2.extensions.connection
+    ) -> None:
+        from alcsm.collection.helper import (
+            SamplingBatch,
+            complete_sampling_batch,
+            create_sampling_batch,
+        )
+
+        cur = db_connection.cursor()
+        create_sampling_batch(
+            cur,
+            SamplingBatch(
+                sampling_batch_id="BATCH-505",
+                search_query='"VP of AI"',
+                platform="linkedin",
+                collection_started_ts=datetime.now(UTC),
+                inclusion_protocol_version="IP-1.0",
+            ),
+        )
+        db_connection.commit()
+
+        complete_sampling_batch(
+            cur,
+            "BATCH-505",
+            collection_ended_ts=datetime.now(UTC),
+            result_set_size=5,
+            records_included=5,
+        )
+        db_connection.commit()
+
+        second = complete_sampling_batch(
+            cur,
+            "BATCH-505",
+            collection_ended_ts=datetime.now(UTC),
+            result_set_size=999,  # must NOT overwrite the first completion
+            records_included=999,
+        )
+        db_connection.commit()
+        assert second is False
+
+        cur.execute(
+            "SELECT result_set_size FROM alcsm.sampling_batch "
+            "WHERE sampling_batch_id=%s",
+            ("BATCH-505",),
+        )
+        (result_set_size,) = cur.fetchone()
+        cur.close()
+        assert result_set_size == 5
+
+    def test_completing_an_unknown_batch_is_a_no_op(
+        self, db_connection: psycopg2.extensions.connection
+    ) -> None:
+        from alcsm.collection.helper import complete_sampling_batch
+
+        cur = db_connection.cursor()
+        completed = complete_sampling_batch(
+            cur,
+            "BATCH-DOES-NOT-EXIST",
+            collection_ended_ts=datetime.now(UTC),
+        )
+        db_connection.commit()
+        cur.close()
+        assert completed is False
