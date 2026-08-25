@@ -37,3 +37,26 @@ backups/
 16_Data/
 05_Data_Collection/Raw_Data/
 05_Data_Collection/Logs/
+05_Data_Collection/LinkedIn_Profiles/01_Raw/
+05_Data_Collection/Job_Postings/01_Raw/
+05_Data_Collection/Job_Postings/02_Processed/
+05_Data_Collection/LinkedIn_Profiles/02_Processed/
+05_Data_Collection/Supplementary_Review/
+06_Annotation/*.xlsx
+06_Annotation/audit_log/
+06_Annotation/exports/
+07_Reliability/Survey_Responses/
+07_Reliability/Double_Coding/*.xlsx
+07_Reliability/Survey_Analysis/*.xlsx
+07_Reliability/Reliability_Results_v1.1.xlsx
+07_Reliability/_reliability_results_v1.1.json
+07_Reliability/D3_D5_Disagreement_Analysis_v1.0.xlsx
+08_NLP_Development/NLP_Baseline_Results_v1.0.xlsx
+09_Statistical_Analysis/Outputs/
+
+# Excel temporary lock files (never a research artifact)
+~$*.xlsx
+
+# Archived real-data workbooks (personal-data-bearing; archive docs/code
+# such as .md/.py/.sql under 16_Archive remain tracked as project history)
+16_Archive/**/*.xlsx

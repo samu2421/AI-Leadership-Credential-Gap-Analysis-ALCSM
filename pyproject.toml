@@ -15,12 +15,14 @@ dependencies = [
     "python-dotenv>=1.0",
     "pandas>=2.0",
     "numpy>=2.0",
+    "openpyxl>=3.1",
 ]
 
 [project.optional-dependencies]
 # NLP pipeline (Phase P7). Local-only models, see
 # CLAUDE_CODE_IMPLEMENTATION_GUIDE.md §10 - never an external API.
 nlp = [
+    "scikit-learn>=1.4",
     "spacy>=3.7",
     "sentence-transformers>=3.0",
 ]
@@ -31,6 +33,10 @@ reliability = [
 # Streamlit screening tool (Phase P9).
 app = [
     "streamlit>=1.30",
+]
+# Thesis-ready static figures (RQ1/RQ2 descriptive output).
+plotting = [
+    "matplotlib>=3.8",
 ]
 dev = [
     "black>=24.0",

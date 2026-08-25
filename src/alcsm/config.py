@@ -12,6 +12,7 @@ import os
 from dataclasses import dataclass
 
 from dotenv import load_dotenv
+from sqlalchemy.engine import URL
 
 load_dotenv()
 
@@ -32,11 +33,38 @@ class DatabaseSettings:
     password: str
 
     def to_dsn(self) -> str:
-        """Build a SQLAlchemy-style DSN (used by db/engine.py only)."""
-        return (
-            f"postgresql+psycopg2://{self.user}:{self.password}"
-            f"@{self.host}:{self.port}/{self.name}"
-        )
+        """Build a SQLAlchemy-style DSN (used by db/engine.py only).
+
+        Uses ``sqlalchemy.engine.URL.create`` rather than manual
+        f-string interpolation for two reasons: it percent-encodes a
+        password containing special characters correctly, and it
+        handles a Unix-socket-directory ``host`` (e.g.
+        ``alcsm.collection.devcluster.throwaway_database``'s socket
+        path, which contains ``/``) by passing it as a query
+        parameter instead of the URL's host segment -- a literal
+        ``/`` in the host segment itself is not valid there and
+        silently corrupts the parsed DSN (discovered when Phase P4's
+        annotation tests first exercised this path against a real
+        throwaway cluster; ``as_psycopg2_kwargs`` never hit this
+        because psycopg2's own ``host`` kwarg already accepts a
+        socket path directly).
+        """
+        if self.host.startswith("/"):
+            return URL.create(
+                "postgresql+psycopg2",
+                username=self.user,
+                password=self.password or None,
+                database=self.name,
+                query={"host": self.host, "port": str(self.port)},
+            ).render_as_string(hide_password=False)
+        return URL.create(
+            "postgresql+psycopg2",
+            username=self.user,
+            password=self.password or None,
+            host=self.host,
+            port=self.port,
+            database=self.name,
+        ).render_as_string(hide_password=False)
 
     def as_psycopg2_kwargs(self) -> dict[str, str | int]:
         """Connection kwargs for a raw ``psycopg2.connect(**kwargs)`` call.

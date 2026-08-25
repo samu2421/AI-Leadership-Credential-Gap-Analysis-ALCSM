@@ -20,6 +20,7 @@ from __future__ import annotations
 
 from collections.abc import Iterator
 
+import pandas as pd
 import psycopg2
 import pytest
 
@@ -30,6 +31,40 @@ from alcsm.config import DatabaseSettings, Settings
 
 _TEST_DB_PORT = 55432
 _TEST_DB_NAME = "alcsm_shared_test"
+
+_ANALYSIS_FIXTURE_PROFILE_IDS = [f"PRF-{i:05d}" for i in range(1, 13)]
+
+
+@pytest.fixture()
+def synthetic_predictions() -> pd.DataFrame:
+    """RQ5 fixture: constructed NLP predictions, one row per profile x
+    dimension. Shared at the root level since both `tests/analysis/`
+    and `tests/nlp/test_evaluate.py` need it."""
+    rows = []
+    for i, pid in enumerate(_ANALYSIS_FIXTURE_PROFILE_IDS):
+        for dim_n in range(1, 7):
+            rows.append(
+                {
+                    "profile_id": pid,
+                    "dimension_number": dim_n,
+                    "predicted_score": (i + dim_n) % 6,
+                }
+            )
+    return pd.DataFrame(rows)
+
+
+@pytest.fixture()
+def synthetic_gold() -> pd.DataFrame:
+    """Same shape, deliberately offset from `synthetic_predictions` so
+    error/agreement metrics are exercised meaningfully (not trivially
+    all-zero-error)."""
+    rows = []
+    for i, pid in enumerate(_ANALYSIS_FIXTURE_PROFILE_IDS):
+        for dim_n in range(1, 7):
+            predicted = (i + dim_n) % 6
+            gold = predicted if i % 3 != 0 else max(0, predicted - 1)
+            rows.append({"profile_id": pid, "dimension_number": dim_n, "score": gold})
+    return pd.DataFrame(rows)
 
 
 @pytest.fixture

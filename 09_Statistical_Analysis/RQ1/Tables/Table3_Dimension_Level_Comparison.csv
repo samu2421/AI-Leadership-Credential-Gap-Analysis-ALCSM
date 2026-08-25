@@ -1,0 +1,7 @@
+dimension,label,mean,median,std,min,max,n_informative
+D1,Formal Education,2.282,3.0,1.5860349977311523,0,5,471
+D2,Professional Certifications,0.468,0.0,0.4994746739323223,0,1,234
+D3,Practical AI Experience,2.928,3.0,1.1390394293628676,0,4,497
+D4,Technical Contributions,0.946,0.0,1.3246105791411849,0,3,175
+D5,Leadership & Strategic Responsibility,2.914,3.0,0.493041763302787,0,4,500
+D6,AI Industry/Application Breadth,1.774,2.0,0.9616514686174967,0,5,497

@@ -1,9 +1,9 @@
 # P3 Sampling Framework Design — LinkedIn Profile Corpus
 
 **Version:** 0.1-DRAFT
-**Status:** Design document only. No real data has been collected under this framework. Execution remains gated on real ethics-committee approval, DPO sign-off, and the `Task5_Implementation_Readiness_Checklist.md` §3 exit criteria — see that document and `Implementation_Phase_Roadmap.md` §7.
+**Status:** Implemented. This framework was executed and collection is complete: the final study corpus comprises 500 included LinkedIn profiles (verified in `06_Annotation/ALCSM_Final_Human_Annotation_v1.1.xlsx` / `11_Implementation_Governance/Reviews/Final_Annotation_Audit_v1.1.md`), alongside 201 job postings collected under the parallel `Task5_P3_JobPosting_Collection_Plan.md`. The sampling strategy, inclusion criteria, and title-gating logic below (§2–§16) are retained as the design record of how that collection was carried out — this status line records only that collection occurred and reached its target; it does not restate or alter any of the methodology below.
 **Purpose:** formalise, extend, and operationalise the profile-sampling design already reasoned through in `Task5_PreCollection_Roadmap.md` §5 and `04_Ethics/01_Ethics_Approval/ALCSM_Ethics_LinkedInCollectionProtocol_v0.1-DRAFT.md` §3, into a single implementation-ready reference for the ~500-profile corpus. This document changes no ALCSM methodology and no database schema — it specifies how the frozen `sampling_batch` → `profile` → `profile_raw_section` structure (`03_Database_Design/02_Schema/alcsm_schema_v1.0.1.sql`) is populated.
-**Last Updated:** 2026-08-02
+**Last Updated:** 2026-08-25 (status line only — see revision note below)
 **Author:** Samiksha Dhere (researcher) — drafted with Claude Code assistance, Phase P3 Session 1
 **Related documents:** `Task5_PreCollection_Roadmap.md` §5, `Task5_LinkedIn_Collection_Workflow.md`, `ALCSM_Ethics_LinkedInCollectionProtocol_v0.1-DRAFT.md`, `ALCSM_Measurement_Specification_v1.0.md` §2.4 (leadership-level taxonomy), `src/alcsm/collection/helper.py`
 
@@ -132,7 +132,7 @@ To be stated in Methods, not buried in Limitations:
 
 ## 17. What this document does not do
 
-- It does not collect any real profile.
+- It is a design specification, not the collection execution itself — the resulting 500-profile corpus was produced by carrying out this framework, not by this document directly; see `Final_Annotation_Audit_v1.1.md` for verification of the resulting corpus.
 - It does not change `sampling_batch`, `profile`, or `profile_raw_section` in the schema — every field referenced above already exists in `alcsm_schema_v1.0.1.sql`.
 - It does not change the D5 leadership-level taxonomy or any other frozen scoring criterion — the title list in §3 is a sampling-frame filter, structurally and conceptually separate from the scoring taxonomy it happens to draw examples from.
 - It does not resolve the two `[INSERT: ...]` open items above (final title list, language/geography scope) — those are author decisions, flagged here for approval, not decided unilaterally.
@@ -140,3 +140,7 @@ To be stated in Methods, not buried in Limitations:
 ---
 
 *This design document draws on `Task5_PreCollection_Roadmap.md` §5 and `ALCSM_Ethics_LinkedInCollectionProtocol_v0.1-DRAFT.md` §3, extending rather than replacing them. No frozen ALCSM methodology or database schema element is altered by this document.*
+
+---
+
+**Revision note (2026-08-25):** the header **Status** field and the first bullet of §17 were updated to correct stale wording ("no real data has been collected") that no longer reflected the project's actual state — the framework was executed and the corpus is complete (500 LinkedIn profiles, 201 job postings). This was a status-wording correction only, confirmed by the author. No change was made to §1–§16 (target population, sampling strategy, title-gating logic, inclusion/exclusion criteria, filters, duplicate detection, quality control, batch management, metadata, reproducibility, audit logging, verification workflow, checkpoints, or selection-bias disclosures) or to §17's other three bullets.
