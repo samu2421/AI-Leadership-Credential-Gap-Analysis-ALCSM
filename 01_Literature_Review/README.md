@@ -17,4 +17,4 @@ Houses the theoretical grounding for the ALCSM framework: source materials, synt
 ## Versioning Rules
 - Never overwrite a draft once it has been shared for feedback — increment MINOR version for each revision round.
 - Bump MAJOR version when the review's scope or structure changes materially (e.g., new search conducted, new theme taxonomy).
-- Superseded drafts move to `17_Archive/02_Literature_Review/`, preserving the full revision history.
+- Superseded drafts move to `16_Archive/02_Literature_Review/`, preserving the full revision history.

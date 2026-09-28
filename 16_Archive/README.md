@@ -1,4 +1,4 @@
-# 17_Archive
+# 16_Archive
 
 ## Purpose
 Permanent home for superseded/deprecated versions of any project artifact, preserving full version history without cluttering the active working folders.
@@ -8,7 +8,7 @@ Permanent home for superseded/deprecated versions of any project artifact, prese
 - Deprecated drafts and retired scripts
 - Anything explicitly superseded elsewhere in the project
 
-Organize archived content in subfolders that mirror the source folder's name and path, created as needed — e.g., `17_Archive/11_Thesis_Writing/`, `17_Archive/04_Database_Design/02_Schema/`.
+Organize archived content in subfolders that mirror the source folder's name and path, created as needed — e.g., `16_Archive/11_Thesis_Writing/`, `16_Archive/04_Database_Design/02_Schema/`.
 
 ## Naming Conventions
 - Retain the original filename and version number unchanged when moving a file here — do not rename on archive.

@@ -16,4 +16,4 @@ Supplementary material referenced in the thesis but not part of the main body.
 
 ## Versioning Rules
 - Standard MAJOR.MINOR versioning; never overwrite an appendix once cross-referenced in the manuscript — bump the version instead.
-- Superseded appendix versions move to `17_Archive/14_Appendix/`.
+- Superseded appendix versions move to `16_Archive/14_Appendix/`.

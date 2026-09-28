@@ -13,4 +13,4 @@ All tables used in the thesis manuscript, in both source data and final formatte
 
 ## Versioning Rules
 - Table numbering must stay stable once referenced in a thesis draft, matching the rule used for `12_Figures`.
-- Content revisions bump the version suffix rather than the table number; superseded versions move to `17_Archive/13_Tables/`.
+- Content revisions bump the version suffix rather than the table number; superseded versions move to `16_Archive/13_Tables/`.

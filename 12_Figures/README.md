@@ -13,4 +13,4 @@ All figures used in the thesis manuscript — charts, diagrams, and model visual
 
 ## Versioning Rules
 - Figure numbering must stay stable once referenced in a thesis draft — never renumber a figure that's already cited in `11_Thesis_Writing`.
-- Content revisions bump the version suffix rather than changing the figure number; superseded versions move to `17_Archive/12_Figures/`.
+- Content revisions bump the version suffix rather than changing the figure number; superseded versions move to `16_Archive/12_Figures/`.

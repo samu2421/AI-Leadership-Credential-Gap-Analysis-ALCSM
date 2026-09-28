@@ -15,4 +15,4 @@ Evidence that the database schema behaves correctly: constraint checks, test res
 
 ## Versioning Rules
 - Validation reports are tied to the schema version they tested — a new schema migration requires a new validation report at the matching version number.
-- Never overwrite a completed validation report; it is a permanent audit record. Superseded/obsolete reports move to `17_Archive/04_Database_Design/03_Validation/`.
+- Never overwrite a completed validation report; it is a permanent audit record. Superseded/obsolete reports move to `16_Archive/04_Database_Design/03_Validation/`.

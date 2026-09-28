@@ -60,7 +60,7 @@ AI_Leadership_Credential_Gap_Analysis/
 ├── 14_Appendix/                    Supplementary manuscript material
 ├── 15_Scripts/                     All executable code (data/NLP/stats)
 ├── 16_Data/                        Processed/working datasets
-└── 17_Archive/                     Superseded versions of any artifact
+└── 16_Archive/                     Superseded versions of any artifact
     └── Superseded_Task1_Task4/     Superseded Task 1-4 files (see Document_Version_Policy.md)
 ```
 
@@ -84,7 +84,7 @@ The numeric prefixes (00–17) reflect the natural order of thesis work, not a r
 6. **Thesis Writing (10)**, drawing on **Figures (12)**, **Tables (13)**, and **Appendix (14)**, is drafted and revised throughout, culminating in the final submitted manuscript.
 7. **Project Management (00)** and **Literature Review (01)** run continuously alongside all of the above.
 8. **Implementation Governance (11)** holds the Claude Code governance package guiding the software build (`src/alcsm/`), which proceeds alongside the thesis tasks per its own phase roadmap (P0–P9).
-9. **Archive (17)** silently accumulates superseded versions from every folder as work progresses, under `17_Archive/Superseded_Task1_Task4/` for Tasks 1-4 artefacts specifically.
+9. **Archive (17)** silently accumulates superseded versions from every folder as work progresses, under `16_Archive/Superseded_Task1_Task4/` for Tasks 1-4 artefacts specifically.
 
 ---
 
@@ -112,7 +112,7 @@ Each folder's own README.md specifies its exact `<FolderTag>` and any folder-spe
 2. **MAJOR** version bump — structural/conceptual changes, milestone freezes, or committee-approved changes.
 3. **MINOR** version bump — edits, corrections, or incremental refinements within the same milestone.
 4. **Frozen artifacts** (Framework v1.0, Database Schema v1.0.1) are locked: no in-place edits, ever. Changes require a new version number and a changelog entry in the relevant folder.
-5. **Archiving** — when a file is superseded, move it (don't delete it) into `17_Archive/`, in a subfolder mirroring its original location (e.g., `17_Archive/10_Thesis_Writing/`), or into `17_Archive/Superseded_Task1_Task4/` for Tasks 1-4 artefacts (per `Document_Version_Policy.md`). Archived files keep their original name and version number.
+5. **Archiving** — when a file is superseded, move it (don't delete it) into `16_Archive/`, in a subfolder mirroring its original location (e.g., `16_Archive/10_Thesis_Writing/`), or into `16_Archive/Superseded_Task1_Task4/` for Tasks 1-4 artefacts (per `Document_Version_Policy.md`). Archived files keep their original name and version number.
 6. **VERSION.md** at the project root is the authoritative log of version changes to major frozen components — append new rows there whenever Framework or Database versions change; never overwrite prior rows.
 
 ---

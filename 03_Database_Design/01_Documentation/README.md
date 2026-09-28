@@ -15,4 +15,4 @@ Narrative and reference documentation explaining the ALCSM database's design, st
 
 ## Versioning Rules
 - Documentation version numbers track the schema version they describe — update documentation whenever `02_Schema` changes, using the matching version number.
-- Never edit the v1.0.1 documentation set in place; superseded documentation moves to `17_Archive/04_Database_Design/01_Documentation/`.
+- Never edit the v1.0.1 documentation set in place; superseded documentation moves to `16_Archive/04_Database_Design/01_Documentation/`.

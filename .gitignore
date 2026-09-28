@@ -60,3 +60,59 @@ backups/
 # Archived real-data workbooks (personal-data-bearing; archive docs/code
 # such as .md/.py/.sql under 16_Archive remain tracked as project history)
 16_Archive/**/*.xlsx
+
+# ---------------------------------------------------------------------------
+# Public-release hardening (added at final cleanup, before making the
+# repository public). The patterns below are deliberately specific: this
+# repository legitimately tracks aggregate-result .csv files, database
+# schema .sql files, and small non-personal reference .xlsx workbooks, so
+# no blanket *.csv / *.sql / *.xlsx ignore is used.
+# ---------------------------------------------------------------------------
+
+# Secrets and credentials (none are currently tracked; these are preventive)
+.env.*
+*.env
+.envrc
+secrets.json
+credentials.json
+service-account*.json
+service_account*.json
+client_secret*.json
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+.aws/
+.netrc
+cookies.txt
+*.cookies
+
+# Database dumps and local databases
+*.sqlite
+*.sqlite3
+*.dump
+*.sql.gz
+*.bak
+
+# Any raw / unprocessed collection folder anywhere in the tree
+**/01_Raw/
+**/Raw_Data/
+**/Raw_Exports/
+
+# Thesis manuscript drafting workspace.
+# 10_Thesis_Writing/ contains AI-assisted working drafts, chapter source maps,
+# QA files and .docx manuscript drafts, all superseded by the submitted thesis.
+# They are kept on disk for the author but excluded from the public repository
+# so that no superseded draft can be mistaken for the final research record.
+# The authoritative research record is the submitted thesis; the authoritative
+# in-repo numbers are the outputs under 09_Statistical_Analysis/, 12_Figures/
+# and 13_Tables/.
+10_Thesis_Writing/
+
+# OS / editor noise
+Thumbs.db
+desktop.ini
+.idea/
+*.swp

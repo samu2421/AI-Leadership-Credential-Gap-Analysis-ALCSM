@@ -19,4 +19,4 @@ Central hub for planning, tracking, and coordinating the ALCSM thesis project ac
 ## Versioning Rules
 - Planning documents follow standard MAJOR.MINOR versioning: MAJOR for scope/milestone changes approved by advisor/committee, MINOR for routine updates.
 - Meeting notes are append-only records identified by date — never overwrite a past meeting's notes.
-- Superseded planning documents (e.g., an old timeline replaced by a new one) move to `17_Archive/01_Project_Management/` rather than being deleted.
+- Superseded planning documents (e.g., an old timeline replaced by a new one) move to `16_Archive/01_Project_Management/` rather than being deleted.

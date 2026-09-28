@@ -13,4 +13,4 @@ Visual documentation of the ALCSM database's entity-relationship structure.
 
 ## Versioning Rules
 - The diagram's version must always match the schema version (`02_Schema`) it depicts — update it whenever the schema changes.
-- Never overwrite a prior diagram version; superseded diagrams move to `17_Archive/04_Database_Design/04_ER_Diagram/`.
+- Never overwrite a prior diagram version; superseded diagrams move to `16_Archive/04_Database_Design/04_ER_Diagram/`.

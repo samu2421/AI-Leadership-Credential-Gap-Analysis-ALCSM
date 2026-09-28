@@ -16,4 +16,4 @@ Home of the ALCSM conceptual framework: its constructs, dimensions, and theoreti
 ## Versioning Rules
 - **v1.0 is frozen and read-only.** Do not edit frozen files in place, under any circumstances.
 - Any refinement after the freeze starts a new version (v1.1 for minor refinement, v2.0 for structural change) and must be logged in this folder's `CHANGELOG.md`, with the v1.0 baseline preserved untouched alongside it.
-- Superseded pre-freeze drafts belong in `17_Archive/03_Framework_Development/`.
+- Superseded pre-freeze drafts belong in `16_Archive/03_Framework_Development/`.
