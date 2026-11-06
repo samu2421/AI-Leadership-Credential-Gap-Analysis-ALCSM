@@ -1,10 +1,21 @@
 # The AI Leadership Credential Gap
 
-**An NLP Audit of 500 LinkedIn Profiles**
+**An NLP Audit of 500 LinkedIn Profiles** — MSc thesis, Applied Data Science and Analytics, SRH University of Applied Sciences Heidelberg (Hamburg campus), 2026.
 
-MSc thesis research repository — Applied Data Science and Analytics, SRH Berlin University of Applied Sciences, Hamburg, Germany.
+This repository contains the framework specification, analysis code, governance record and aggregate results for a master's thesis study of the credential signals that self-identified AI leaders display on LinkedIn, and how those signals compare to the credentials that AI leadership job postings ask for.
 
-This repository contains the framework specification, analysis code, governance record, and aggregate results for a master's thesis study of the credential signals that self-identified AI leaders display on LinkedIn, and how those signals compare to the credentials that AI leadership job postings actually ask for.
+## At a glance
+
+| | |
+|---|---|
+| **Type** | Individual MSc thesis (research and software) |
+| **Data** | 500 German-market LinkedIn profiles (611 collected), 201 job postings with 1,558 requirement records, 75 double-coded profiles, expert survey (N = 24) |
+| **What I built** | A Python package (`src/alcsm/`) for collection, annotation, reliability and analysis; a PostgreSQL schema with a validation harness; a Streamlit annotation review tool; analysis scripts for RQ1–RQ3 and an NLP baseline for RQ5 |
+| **Methods** | Rubric-based annotation on six ordinal dimensions, Krippendorff's alpha, descriptive and supply-versus-demand analysis, TF-IDF + Ridge regression |
+| **Stack** | Python 3.11, pandas, SQLAlchemy, PostgreSQL, Streamlit, scikit-learn, matplotlib, pytest |
+| **Tests** | 608 automated tests; 263 of them run against a temporary local PostgreSQL instance |
+| **Headline results** | 51.3% of job-posting requirements fall outside every credential dimension; industry breadth is visible in 99.4% of profiles but requested in 0.06% of requirements; the NLP baseline beats the majority class on one of six dimensions (D3: 52.0% vs 35.0%) |
+| **Privacy** | No personal data is included; only aggregate outputs are published |
 
 ---
 
@@ -191,20 +202,18 @@ There is no working screening application in this repository. `src/alcsm/app/str
 ## Repository structure
 
 ```
-00_Project_Management/     Project administration
 01_Literature_Review/      Literature mapping and annotations
 02_Framework_Development/  ALCSM specification, rubric, coding rulebook (incl. v1.1 D6)
-03_Database_Design/        ER design, PostgreSQL schema and patch DDL
+03_Database_Design/        ER design, PostgreSQL schema, patch DDL, validation harness, backup script
 04_Ethics/                 Ethics, DPIA, LIA, privacy notice, GDPR documentation (drafts)
-05_Data_Collection/        Sampling frame, search library, dictionaries, collection protocol
+05_Data_Collection/        Sampling frame, collection protocols, data dictionary (collected data withheld)
 06_Annotation/             Annotation handbook and procedure
-07_Reliability/            Double-coding and expert-survey procedure
-08_NLP_Development/        NLP baseline design notes
-09_Statistical_Analysis/   RQ1/RQ2/RQ3 analysis outputs (aggregate tables and figures)
-11_Implementation_Governance/  Decision log, project context, guides, review reports
-12_Figures/                Thesis figures
-13_Tables/                 Thesis tables
-14_Appendix/               Appendix material
+07_Reliability/            Double-coding and expert-survey procedure and reports
+08_NLP_Development/        NLP baseline design notes and results
+09_Statistical_Analysis/   RQ1–RQ5 analysis outputs (aggregate tables and figures; RQ4 is a limitation report only)
+11_Implementation_Governance/  Decision log, project context, review reports
+12_Figures/                Thesis figures (curated copies of 09_ outputs)
+13_Tables/                 Thesis tables (curated copies of 09_ outputs)
 15_Scripts/                Runnable analysis entry points
 16_Archive/                Superseded artefacts, retained as historical record
 src/alcsm/                 Python package (collection, annotation, reliability, analysis, nlp, db, app)
@@ -217,14 +226,36 @@ tests/                     Test suite
 
 The analysis code, framework specification, and aggregate outputs are complete and inspectable. **The analyses cannot be re-executed end-to-end from this repository**, because the underlying profile, posting, and survey data are withheld for privacy reasons (see below). What is reproducible is the logic: every script, transformation, statistic, and model is present and readable, and the aggregate outputs they produced are committed under `09_Statistical_Analysis/`, `12_Figures/`, and `13_Tables/`.
 
+### Setup
+
+Requires Python 3.11 or later. On macOS the system `python3` may be older; use `python3.11`.
+
 ```bash
-python -m venv .venv
+python3.11 -m venv .venv
 source .venv/bin/activate
-pip install -e ".[nlp,reliability,plotting,dev]"
-pytest
+pip install -e ".[nlp,reliability,plotting,app,dev]"
+cp .env.example .env   # only needed for code that connects to a PostgreSQL database
 ```
 
-Requires Python 3.11+. `requirements.txt` is a pinned snapshot of the core environment; the optional extras above add scikit-learn, SciPy, and Matplotlib, which the reliability, NLP, and plotting code need.
+`requirements.txt` is a pinned snapshot of the core environment.
+
+### Tests
+
+```bash
+pytest -q
+```
+
+The suite contains 608 tests. 263 of them start a temporary, throwaway PostgreSQL cluster (via `initdb` and `pg_ctl`) and are skipped when PostgreSQL is not installed. All test data is synthetic.
+
+### Annotation review tool
+
+```bash
+streamlit run src/alcsm/app/annotation_app.py
+```
+
+The tool runs on synthetic fixtures by default; no real data or live database is needed.
+
+### Analysis scripts
 
 Analysis entry points live in `15_Scripts/` (RQ1, RQ2, reliability, survey analysis, NLP baseline, results summary). Each expects the withheld source workbooks at the paths named in its own docstring.
 
@@ -288,6 +319,7 @@ To state plainly what this work does **not** do:
 
 *The AI Leadership Credential Gap: An NLP Audit of 500 LinkedIn Profiles.*
 MSc Applied Data Science and Analytics, SRH Berlin University of Applied Sciences, Hamburg, Germany, 2026.
+(Institution name as printed on the thesis title page. The degree is awarded by SRH University of Applied Sciences Heidelberg.)
 
 The submitted thesis is the authoritative source for all research content. Where any document in this repository disagrees with it — and this repository deliberately preserves superseded design documents as a historical record — the thesis governs.
 
@@ -303,6 +335,10 @@ The submitted thesis is the authoritative source for all research content. Where
   note    = {Applied Data Science and Analytics}
 }
 ```
+
+## Author
+
+Samiksha Dhere — individual MSc thesis. The research design, framework, annotation decisions and interpretation of results are my own. Software development was AI-assisted (Claude Code), as disclosed in the thesis and in the author line of each project document.
 
 ## License
 

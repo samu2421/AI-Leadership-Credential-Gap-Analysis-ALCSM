@@ -21,15 +21,14 @@ Both are locked and must not be edited in place. This structure organizes everyt
 AI_Leadership_Credential_Gap_Analysis/
 ├── VERSION.md                      Root version-status record
 ├── PROJECT_STRUCTURE.md            This document
-├── README.md, CLAUDE_CODE_RULES.md, CLAUDE_CODE_IMPLEMENTATION_GUIDE.md
-│                                    Software-implementation governance (full copies live in
-│                                    11_Implementation_Governance/)
+├── README.md                       Project orientation. Internal AI-assistant instruction
+│                                    files previously listed here were removed from the
+│                                    public repository (November 2026).
 ├── pyproject.toml, src/alcsm/, tests/, .gitignore, requirements.txt
 │                                    Software scaffolding (Phase P0) — the Python
 │                                    implementation layer, additive to the thesis-task
 │                                    folders below
 │
-├── 00_Project_Management/          Planning, timelines, meeting notes
 ├── 01_Literature_Review/           Sources, synthesis, review chapter drafts
 ├── 02_Framework_Development/       ALCSM framework — FROZEN v1.0
 ├── 03_Database_Design/             ALCSM database — FROZEN v1.0.1
@@ -45,7 +44,6 @@ AI_Leadership_Credential_Gap_Analysis/
 │   ├── 05_Consent_Materials/       Survey participant information sheet + consent form
 │   ├── 06_GDPR_Documentation/      Data Management Plan + GDPR compliance checklist
 │   ├── 07_Institutional_Correspondence/  Dated committee/DPO/supervisor correspondence log
-│   ├── 08_Submission_Package/      Frozen, as-submitted snapshots (one per submission event)
 │   └── 09_Review_Logs/             Governance consistency reviews of the 04_Ethics/ set
 ├── 05_Data_Collection/             Raw data acquisition (untouched originals)
 ├── 06_Annotation/                  Codebooks, annotated datasets
@@ -57,9 +55,7 @@ AI_Leadership_Credential_Gap_Analysis/
 │                                    Document_Version_Policy.md, roadmaps, consistency review)
 ├── 12_Figures/                     Thesis figures (source + exports)
 ├── 13_Tables/                      Thesis tables (source + exports)
-├── 14_Appendix/                    Supplementary manuscript material
 ├── 15_Scripts/                     All executable code (data/NLP/stats)
-├── 16_Data/                        Processed/working datasets
 └── 16_Archive/                     Superseded versions of any artifact
     └── Superseded_Task1_Task4/     Superseded Task 1-4 files (see Document_Version_Policy.md)
 ```
@@ -74,17 +70,17 @@ Each folder listed above (the 18 top-level folders, `00` through `17`, plus the 
 
 ## 3. Workflow: Task 5 Through Submission
 
-The numeric prefixes (00–17) reflect the natural order of thesis work, not a rigid sequence — several folders are used concurrently throughout the remaining tasks:
+The numeric prefixes (01–16) reflect the natural order of thesis work, not a rigid sequence — several folders are used concurrently throughout the remaining tasks:
 
 1. **Ethics (04)** — secure IRB approval before any human-subjects data work begins.
 2. **Data Collection (05)** — gather raw source data per the approved protocol.
 3. **Annotation (06)** — apply the ALCSM framework to label the collected data.
 4. **Reliability (07)** — validate annotation quality before relying on the labels.
-5. **NLP Development (08)** and **Statistical Analysis (09)** — build models and run analyses on the validated, annotated data (processed copies live in **Data, 16**; code lives in **Scripts, 15**).
-6. **Thesis Writing (10)**, drawing on **Figures (12)**, **Tables (13)**, and **Appendix (14)**, is drafted and revised throughout, culminating in the final submitted manuscript.
-7. **Project Management (00)** and **Literature Review (01)** run continuously alongside all of the above.
+5. **NLP Development (08)** and **Statistical Analysis (09)** — build models and run analyses on the validated, annotated data (processed data is kept locally and not published; code lives in **Scripts, 15**).
+6. **Thesis Writing (10)**, kept locally and not published, draws on **Figures (12)** and **Tables (13)** and culminates in the final submitted manuscript.
+7. **Literature Review (01)** runs continuously alongside all of the above.
 8. **Implementation Governance (11)** holds the Claude Code governance package guiding the software build (`src/alcsm/`), which proceeds alongside the thesis tasks per its own phase roadmap (P0–P9).
-9. **Archive (17)** silently accumulates superseded versions from every folder as work progresses, under `16_Archive/Superseded_Task1_Task4/` for Tasks 1-4 artefacts specifically.
+9. **Archive (16)** silently accumulates superseded versions from every folder as work progresses, under `16_Archive/Superseded_Task1_Task4/` for Tasks 1-4 artefacts specifically.
 
 ---
 
@@ -96,7 +92,7 @@ All deliverables follow a consistent pattern:
 ALCSM_<FolderTag>_<ShortDescription>_v<Major>.<Minor>[.<Patch>][-STATUS].<ext>
 ```
 
-- `<FolderTag>` — short code identifying the folder/category (e.g., `PM`, `LitReview`, `Framework`, `DB`, `Ethics`, `DataCollection`, `Annotation`, `Reliability`, `NLP`, `Stats`, `Thesis`, `Fig`, `Tbl`, `Appendix`, `Data`).
+- `<FolderTag>` — short code identifying the folder/category (e.g., `LitReview`, `Framework`, `DB`, `Ethics`, `DataCollection`, `Annotation`, `Reliability`, `NLP`, `Stats`, `Thesis`, `Fig`, `Tbl`).
 - `<Major>.<Minor>` — standard two-part version (e.g., `v1.2`); the database uses three-part semantic versioning (`v1.0.1`) to match its schema versioning.
 - `-STATUS` — optional suffix such as `-DRAFT` or `-FROZEN` where useful.
 - Never use ambiguous labels like "final", "latest", "new", or "v2_really_final" — the version number is always the single source of truth.

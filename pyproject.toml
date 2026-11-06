@@ -19,18 +19,15 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-# NLP pipeline (Phase P7). Local-only models, see
-# CLAUDE_CODE_IMPLEMENTATION_GUIDE.md §10 - never an external API.
+# NLP baseline: TF-IDF + Ridge (scikit-learn). Local-only, no external API.
 nlp = [
     "scikit-learn>=1.4",
-    "spacy>=3.7",
-    "sentence-transformers>=3.0",
 ]
 # Reliability computation (Phase P5).
 reliability = [
     "scipy>=1.11",
 ]
-# Streamlit screening tool (Phase P9).
+# Streamlit annotation review tool (src/alcsm/app/annotation_app.py).
 app = [
     "streamlit>=1.30",
 ]

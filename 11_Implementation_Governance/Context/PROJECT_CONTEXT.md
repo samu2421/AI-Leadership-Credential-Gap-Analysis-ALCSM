@@ -7,7 +7,7 @@
 > This is **engineering onboarding documentation**, not a thesis document. It is written the way a senior engineer would brief a new teammate on an established codebase. Where research methodology matters to implementation, it is explained in plain engineering terms and cross-referenced to the canonical methodology documents — but this file never *redefines* methodology.
 
 **Document status:** living engineering reference. Consistent with the canonical Tasks 1–5 documentation as of Schema **v1.0.1**.
-**Companion files you will also need:** `CLAUDE_CODE_RULES.md` (the eight hard rules), `CLAUDE_CODE_IMPLEMENTATION_GUIDE.md` (technical spec), `Document_Version_Policy.md` (which files are canonical), `Task5_Implementation_Readiness_Checklist.md` (what is ready to build).
+**Companion files you will also need:** `Document_Version_Policy.md` (which files are canonical), `Task5_Implementation_Readiness_Checklist.md` (what is ready to build). The internal AI-assistant instruction files that previously headed this list were removed from the public repository (November 2026).
 
 ---
 
@@ -492,8 +492,8 @@ The v1.0.1 constraints F-01…F-05 are documented in `PATCH_NOTES_v1.0.1.md`. Th
 ```
 alcsm-thesis/
 ├── PROJECT_CONTEXT.md                    ← this file (read first)
-├── CLAUDE_CODE_IMPLEMENTATION_GUIDE.md   ← technical spec
-├── CLAUDE_CODE_RULES.md                  ← eight hard rules
+├── (internal AI-assistant instruction files — removed from the
+│    public repository, November 2026)
 ├── README.md                             ← short orientation
 ├── Document_Version_Policy.md            ← canonical vs archived files
 ├── Task5_Implementation_Readiness_Checklist.md
@@ -840,7 +840,7 @@ Learn from these; several actually happened during earlier tasks.
 
 ## 40. Things Claude Code Must Never Do
 
-This is the short, absolute list. If a task requires any of these, **stop and ask the author.** (The fuller version is `CLAUDE_CODE_RULES.md`.)
+This is the short, absolute list. If a task requires any of these, **stop and ask the author.**
 
 1. Never modify the ALCSM methodology (dimensions, criteria, rules, precedents, taxonomies' structure, research questions).
 2. Never change the database schema (no table/column/constraint/view added, altered, or removed). Never add a composite/total/weight/band column.
@@ -934,7 +934,7 @@ You do not need to be a lawyer, but you must respect these boundaries, which are
 
 A typical implementation session:
 
-1. **Read `CLAUDE_CODE_RULES.md`, then the relevant sections of this file and the implementation guide.**
+1. **Read the relevant sections of this file.** (The internal AI-assistant instruction files referenced at this step were removed from the public repository, November 2026.)
 2. Check `Task5_Implementation_Readiness_Checklist.md` for what phase you're in and what's allowed.
 3. Work on a short-lived branch, one module or task at a time.
 4. Write the code *and* its tests (spec-based, non-personal fixtures) together.
@@ -1002,8 +1002,7 @@ None of these are started during the thesis implementation. They are the roadmap
 | Pre-collection roadmap (ethics/GDPR) | `Task5_PreCollection_Roadmap.md` |
 | Implementation plan | `Task5_Implementation_Plan.md` |
 | Readiness checklist | `Task5_Implementation_Readiness_Checklist.md` |
-| Technical implementation spec | `CLAUDE_CODE_IMPLEMENTATION_GUIDE.md` |
-| Hard rules | `CLAUDE_CODE_RULES.md` |
+| Technical implementation spec and hard rules | Internal AI-assistant instruction files (removed from the public repository, November 2026) |
 | Canonical-file policy | `Document_Version_Policy.md` |
 
 ## Appendix B — Glossary

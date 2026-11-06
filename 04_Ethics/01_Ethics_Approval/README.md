@@ -12,7 +12,7 @@ The formal ethics-committee application for this project and its supporting prot
 ## Naming Conventions
 - `ALCSM_Ethics_<Description>_v<Major>.<Minor>[-STATUS].<ext>`
   - e.g. `ALCSM_Ethics_ApplicationDraft_v0.1-DRAFT.md`, `ALCSM_Ethics_ApplicationDraft_v1.0-SUBMITTED.md`
-  - The submission/approval *date* itself is recorded inside the document's own metadata block (see `Document Header` fields) and in `08_Submission_Package/`'s dated snapshot folders, not in the filename.
+  - The submission/approval *date* itself is recorded inside the document's own metadata block (see `Document Header` fields), not in the filename.
 
 ## Versioning Rules
 - A submitted version is immutable once submitted — never edit it in place; a revision requested by the committee becomes a new minor/major version referencing the original.

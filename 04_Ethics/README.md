@@ -11,7 +11,7 @@ IRB/ethics approval and compliance documentation for any human-subjects aspects 
 
 ## Naming Conventions
 - `ALCSM_Ethics_<Description>_v<Major>.<Minor>[-STATUS].<ext>` — the project-wide pattern from `PROJECT_STRUCTURE.md` §4. Each of the nine subfolders below states the exact pattern for its own documents (e.g. `ALCSM_Ethics_ApplicationDraft_v0.1-DRAFT.md`).
-  - **Exception:** `07_Institutional_Correspondence/` and `08_Submission_Package/` use dated (not versioned) filenames instead, since those records are point-in-time snapshots rather than evolving documents — see those subfolders' own READMEs.
+  - **Exception:** `07_Institutional_Correspondence/` uses dated (not versioned) filenames instead, since those records are point-in-time snapshots rather than evolving documents — see that subfolder's own README.
 
 *(Corrected P2 Session 4, 2026-07-30: this line previously required a trailing `_<YYYY-MM-DD>` date suffix, which none of the documents drafted in P2 Sessions 1–2 actually used — see `P2_Governance_QA_Report.md` finding D-1. The convention above now matches the files that exist.)*
 

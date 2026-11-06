@@ -1,12 +1,3 @@
 # Collection Workbooks
 
-This folder contains the primary relational Excel workbooks used during data collection.
-
-Files:
-
-- ALCSM_LinkedIn_DataCollection_v1.0.xlsx
-- ALCSM_JobPosting_DataCollection_v1.0.xlsx
-
-These workbooks constitute the master data collection interface for the study.
-
-Version history is maintained through GitHub. Workbooks are not overwritten after collection begins.
+The LinkedIn collection workbook used during the study contains personal data and is intentionally not included in this repository. Raw and processed collection files are excluded via .gitignore. The variables it recorded are documented in `05_Data_Collection/Research_Metadata/Master_Data_Dictionary.xlsx`.

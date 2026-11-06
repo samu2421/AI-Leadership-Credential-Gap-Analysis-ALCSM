@@ -71,6 +71,7 @@ backups/
 
 # Secrets and credentials (none are currently tracked; these are preventive)
 .env.*
+!.env.example
 *.env
 .envrc
 secrets.json
@@ -88,6 +89,9 @@ id_ed25519*
 .netrc
 cookies.txt
 *.cookies
+
+# Collection workbooks (personal data; none currently present, preventive guard)
+05_Data_Collection/Collection_Workbooks/*.xlsx
 
 # Database dumps and local databases
 *.sqlite
