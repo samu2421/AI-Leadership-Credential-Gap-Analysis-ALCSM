@@ -318,8 +318,8 @@ To state plainly what this work does **not** do:
 ## Thesis
 
 *The AI Leadership Credential Gap: An NLP Audit of 500 LinkedIn Profiles.*
+
 MSc Applied Data Science and Analytics, SRH Berlin University of Applied Sciences, Hamburg, Germany, 2026.
-(Institution name as printed on the thesis title page. The degree is awarded by SRH University of Applied Sciences Heidelberg.)
 
 The submitted thesis is the authoritative source for all research content. Where any document in this repository disagrees with it — and this repository deliberately preserves superseded design documents as a historical record — the thesis governs.
 
